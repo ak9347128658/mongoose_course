@@ -1,7 +1,7 @@
 import { DatabaseConnection } from './config/database';
 import { UserService } from './services/UserService';
 import { UserRole } from './types/user.types';
-
+// https://chatgpt.com/c/69096175-fa20-8323-8a3e-1ecbfb5bfd07
 async function main() {
     try {
         const db = DatabaseConnection.getInstance();
