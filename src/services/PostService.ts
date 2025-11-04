@@ -117,6 +117,7 @@ export class PostService {
         status: PostStatus.PUBLISHED,
         publishedAt: { $lte: new Date() }
       };
+// Post.find(query)
 
       const sortOptions: any = {};
       if (sortBy === 'likes') {

@@ -143,10 +143,10 @@ seoData: {
     default: () => ({ keywords: [] })
   }
 
+
 }, {
   timestamps: true,
-  toJSON: { virtuals: true },
-  toObject: { virtuals: true }
+  toJSON: { virtuals: true },  toObject: { virtuals: true }
 });
 
 // Compound indexes for common query patterns
@@ -165,6 +165,9 @@ PostSchema.index({
     content: 1
   }
 }); // Full-text search with weights
+
+// Post.find({ $text: { $search: "mongodb performance" } });
+
 
 // Virtual for like count
 PostSchema.virtual('likesCount').get(function(this: IPostDocument) {
@@ -186,12 +189,17 @@ PostSchema.methods.generateSlug = function(this: IPostDocument): string {
     .trim();
 };
 
+// title: "Learn MongoDB in 2025!!"
+// slug: "learn-mongodb-in-2025"
+// https://myblog.com/learn-mongodb-in-2025
+
 // Instance method to calculate read time
 PostSchema.methods.calculateReadTime = function(this: IPostDocument): number {
   const wordsPerMinute = 200;
   const wordCount = this.content.split(/\s+/).length;
   return Math.ceil(wordCount / wordsPerMinute) || 1;
 };
+// 450 words → 450 / 200 = 2.25 → 3 min read
 
 // Instance method to check if published
 PostSchema.methods.isPublished = function(this: IPostDocument): boolean {
@@ -199,6 +207,11 @@ PostSchema.methods.isPublished = function(this: IPostDocument): boolean {
          this.publishedAt != null && 
          this.publishedAt <= new Date();
 };
+// {
+//   status: "published",
+//   publishedAt: "2025-11-04T10:00:00Z"
+// }
+
 
 // Pre-save middleware
 PostSchema.pre('save', function(this: IPostDocument, next) {
@@ -224,6 +237,8 @@ PostSchema.pre('save', function(this: IPostDocument, next) {
       .substring(0, 150)
       .trim() + '...';
   }
+// "<p>MongoDB is a NoSQL database...</p>"
+// "MongoDB is a NoSQL database..."
 
   next();
 });

@@ -9,6 +9,7 @@ const CommentSchema = new Schema<ICommentDocument>({
     required: [true, 'Comment must belong to a post'],
     index: true
   },
+// Comment.find({ post: postId });
 
   author: {
     type: Schema.Types.ObjectId,
@@ -16,7 +17,7 @@ const CommentSchema = new Schema<ICommentDocument>({
     required: [true, 'Comment must have an author'],
     index: true
   },
-
+// .populate('author')
   content: {
     type: String,
     required: [true, 'Comment content is required'],
@@ -30,6 +31,9 @@ const CommentSchema = new Schema<ICommentDocument>({
     default: null,
     index: true
   },
+// Comment A (top-level)
+// └── Comment B (reply to A)
+//     └── Comment C (reply to B)
 
   isApproved: {
     type: Boolean,
@@ -59,5 +63,12 @@ CommentSchema.virtual('replies', {
   localField: '_id',
   foreignField: 'parentComment'
 });
+
+// Comment A
+//  ├── Reply 1
+//  ├── Reply 2
+//  │    └── Reply 2.1
+//  └── Reply 3
+
 
 export const Comment = model<ICommentDocument>('Comment', CommentSchema);
