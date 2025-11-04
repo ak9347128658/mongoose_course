@@ -28,6 +28,19 @@ export interface IPostDocument extends IPost, Document {
   isPublished(): boolean;
 }
 
+export interface IPostInput {
+  title: string;
+  slug?: string;
+  content: string;
+  excerpt: string;
+  categories: string[];
+  tags: string[];
+  featuredImage?: string;
+  status: PostStatus;
+  publishedAt?: Date;
+  seoData: SEOData;
+}
+
 export enum PostStatus {
   DRAFT = 'draft',
   PUBLISHED = 'published',

@@ -115,7 +115,7 @@ export class PostService {
       const query: FilterQuery<IPostDocument> = {
         categories: category,
         status: PostStatus.PUBLISHED,
-        publishedAt: { $lte: new Date() }
+       publishedAt: { $lte: new Date() }
       };
 // Post.find(query)
 
